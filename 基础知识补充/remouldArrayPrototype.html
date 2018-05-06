@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		/*Array对象的prototype的push方法 使类数组也可以直接使用该方法*/
+
+		Function.prototype.uncurrying=function(){
+			let self = this;
+			return function(){
+				let obj = Array.prototype.shift.call(arguments);//原对象（数组，类数组）
+				return self.apply(obj,arguments)
+			}
+		}
+		// let push = Array.prototype.push.uncurrying();
+		// function result(one,two,three){
+		// 	push(arguments,4)
+		// 	console.log(arguments)
+		// }
+		// result(1,2,3);
+
+		/*Array对象的prototype的push shift forEach方法 使类数组也可以直接使用该方法*/
+		let ArrMethod = {};
+		for(var i =0,fn,ary=['push','shift','forEach','concat'];fn=ary[i++];){
+			ArrMethod[fn] = Array.prototype[fn].uncurrying()
+		}
+		let object = {
+			length:3,
+			0:1,
+			1:2,
+			2:3
+		}
+		ArrMethod.push(object,4);
+		console.log(object)
+		let first = ArrMethod.shift(object);
+		console.log(first);
+	</script>
+</body>
+</html>

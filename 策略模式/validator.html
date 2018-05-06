@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form id="registerForm">
+		<input type="text" name="userName"/>
+		<input type="password" name='password'/>
+		<input type="text" name='phoneNumber'>
+		<input type="button" value="点击" id="submit">
+	</form>
+	<script>
+		//策略对象
+		var strategies = {
+			isNonEmpty:function(value,errorMsg){
+				if(value ===''){
+					return errorMsg;
+				}
+			},
+			minLength:function(value,length,errorMsg){
+				if(value.length<length){
+					return errorMsg;
+				}
+			},
+			isMobile:function(value,errorMsg){
+				if(!/(^1[3|5|8][0-9]{9}$)/.test(value)){
+					return errorMsg
+				}
+			}
+		}
+		//context （validator类）
+		function Validator(){
+			this.cache = [];
+		}
+		Validator.prototype.add = function(dom,rule,errorMsg){
+			var ary = rule.split(':');
+			this.cache.push(function(){
+				var strategy = ary.shift();
+				ary.unshift(dom.value);
+				ary.push(errorMsg)
+				return strategies[strategy].apply(dom,ary);
+			})
+		}
+		Validator.prototype.start = function(){
+			for (var i = 0,validataFunc; validataFunc=this.cache[i]; i++) {
+				var msg = validataFunc();
+				if(msg){
+					return msg
+				}
+			}
+		}
+		//客户调用代码
+		var validataFunc = function(){
+			var validator = new Validator();
+			validator.add(registerForm.userName,'isNonEmpty','用户名不能为空！');
+			validator.add(registerForm.password,'minLength:6','密码不能小于6位！');
+			validator.add(registerForm.phoneNumber,'isMobile','手机格式不正确！');
+			var errorMsg = validator.start();
+			return errorMsg;
+		}
+		var registerForm = document.getElementById('registerForm');
+		var submit = document.getElementById('submit');
+		submit.onclick = function(e){
+			e.preventDefault();
+			var errorMsg = validataFunc();
+			if(errorMsg){
+				return false;
+			}
+		}
+	</script>
+</body>
+</html>

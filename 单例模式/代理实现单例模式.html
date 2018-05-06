@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//可以创建多div的功能函数
+		function createDiv(html){
+			this.html = html;
+			this.init();
+		};
+		createDiv.prototype.init = function(){
+			var div = document.createElement('div');
+			div.innerHTML = this.html;
+			document.body.appendChild(div);
+		}
+
+		//单利代理函数
+		var proxySingletonCreateDiv = (function(){
+			var instance;
+			return function(html){
+				if(!instance){
+					return instance = new createDiv(html);
+				}
+				return instance;
+			}
+		})();
+		var a = new proxySingletonCreateDiv('div1');
+		var b = new proxySingletonCreateDiv('div2');
+		console.log(a===b);
+	</script>
+</body>
+</html>

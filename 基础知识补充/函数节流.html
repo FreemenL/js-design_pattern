@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="container"></div>
+	<script type="text/javascript">
+		function throttle(fn,interval){
+			let _self = fn;
+			var timmer;
+			let isFirst = true;
+			return function(){
+				let args = arguments;
+				let _me = this;
+				if(isFirst){
+					fn.apply(_me,args)
+					return isFirst = false;
+				}
+				if(timmer){
+					return false;
+				}
+				timmer = setTimeout(function(){
+					clearTimeout(timmer);
+					timmer = null;
+					fn.apply(_me,args);
+				},500||interval)
+			}
+		}
+		window.onresize =throttle(function(){
+			console.log(5)
+		},500);
+	</script>
+</body>
+</html>

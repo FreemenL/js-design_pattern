@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		// 1.
+		/*各个等级工资的算法（变化的部分）----start*/ 
+		function performanceS(){}
+		performanceS.prototype.calulate = function(salary){
+			return salary*4;
+		}
+		function performanceA(){}
+		performanceA.prototype.calulate = function(salary){
+			return salary*3;
+		}
+		function performanceB(){}
+		performanceB.prototype.calulate = function(salary){
+			return salary*2;
+		}
+		function performanceC(){}
+		performanceC.prototype.calulate = function(salary){
+			return salary*1;
+		}
+		/*各个等级工资的算法----end*/ 
+
+		/*context算法的使用方式（不变的部分）----start*/ 
+		function Bonus(){
+			this.salary = null;//员工的初始工资
+			this.strategy = null;
+		}
+		Bonus.prototype.setSalary = function(salary){
+			this.salary = salary;
+		};
+		Bonus.prototype.setStrategy = function(strategy){
+			this.strategy = strategy;
+		}
+		Bonus.prototype.getBonus = function(){
+			return this.strategy.calulate(this.salary);
+		}
+		/*context算法的使用方式（不变的部分）----end*/ 
+		let bonus = new Bonus();
+		bonus.setSalary(1000);
+		bonus.setStrategy(new performanceS());
+		// console.log(bonus.getBonus());
+		
+
+	</script>
+</body>
+</html>

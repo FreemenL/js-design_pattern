@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		/*运用函数柯里化的思想 计算0到n的和*/ 
+		function currying(fn){//通过arguments判断是否求和
+			let args = [];
+			return function (){
+				if(arguments.length==0){
+					return fn.apply(this,args)
+				}else{
+					[].push.apply(args,arguments);
+					return arguments.callee;
+				}
+			}
+		}
+		var cost = (function(){//加法计算功能函数
+			let money = 0;
+			return function(){
+				for (var i = 0,l=arguments.length;i<l;i++) {
+					money+=arguments[i]
+				}
+				return money
+			}
+		})()
+		var cost = currying(cost);
+		function addNumber(number){
+			for(let i=0;i<=number;i++){
+				cost(i)
+			}
+			return cost();
+		}
+		console.log(addNumber(100));
+	</script>
+</body>
+</html>

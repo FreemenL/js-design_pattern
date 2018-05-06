@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		// 2.JS策略模式
+		let strategys = {
+			s:function(salary){
+				return salary*4
+			},
+			a:function(salary){
+				return salary*3
+			},
+			b:function(salary){
+				return salary*2
+			}
+		}
+		function catulateBonus(level,salary){
+			return strategys[level](salary)
+		}
+		console.log(catulateBonus('s',12));
+	</script>
+</body>
+</html>

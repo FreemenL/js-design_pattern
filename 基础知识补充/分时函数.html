@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		let arr  =[];
+		for(var i=0;i<=10000000;i++){
+			arr.push(i);
+		}
+		let renderFriendList = function(data,fn,count){
+			let timmer = null;
+			function start(){
+				for (var i = 0; i <Math.min(count||1,data.length); i++) {
+					var obj = data.shift();
+					fn(obj);
+				}
+			}
+			return function(){
+				timmer  = setInterval(function(){
+					if(data.length===0){
+						clearInterval(timmer);
+					}
+					start();
+				},200)
+			}
+		}
+		renderFriendList(arr,function(num){
+			var divEle = document.createElement('div');
+			divEle.innerHTML = num;
+			document.body.appendChild(divEle);
+		},18)();
+	</script>
+</body>
+</html>

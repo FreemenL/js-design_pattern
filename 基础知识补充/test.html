@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		// var cost = (function(){
+		// 	var args = [];
+		// 	console.log(args);
+		// 	return function(){
+		// 		if(arguments.length===0){
+		// 			var money = 0;
+		// 			for(var i = 0,l=args.length;i<l;i++){
+		// 				money+=args[i];
+		// 			}
+		// 			return money;
+		// 		}else{
+		// 			[].push.apply(args,arguments);
+		// 		}
+		// 	}
+		// })()
+		// cost(100);
+		// cost(299);
+		// console.log(cost());
+		function test(){
+
+			return function(){
+				console.log('obj');
+			}
+		}
+		test();
+	</script>
+</body>
+</html>

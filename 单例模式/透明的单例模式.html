@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		let createDiv = (function(){
+			let instance;
+			let createDiv = function(html){
+				if(instance){
+					return instance;
+				}
+				this.html = html;
+				this.init();
+				return instance = this;
+			}
+			createDiv.prototype.init = function(){
+				let div = document.createElement('div');
+				div.innerHTML = this.html;
+				document.body.appendChild(div);
+			}
+			return createDiv;//返回该函数才能当做构造函数来用
+		})()
+		var a = new createDiv('div1');
+		var b = new createDiv('div2');
+		console.log(a===b);
+	</script>
+</body>
+</html>
