@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		/**
+		 * 基本讲解
+		 * 小明追MM送花的故事
+		 */
+		//不用代理模式的情况
+		/*var Flower = function(){}
+		var xiaoming = {
+			sendFlower:function(target){
+				var flower = new Flower();
+				target.receiveFlowe(flower);
+			}
+		}
+		var A = {
+			receiveFlowe:function(flower){
+				console.log("收到花："+flower);
+			}
+		}
+		xiaoming.sendFlower(A);*/
+		//引入b对象做代理
+		var Flower = function(){}
+		var xiaoming = {
+			sendFlower:function(target){
+				var flower = new Flower();
+				target.receiveFlowe(flower);
+			}
+		}
+		var B = {
+			receiveFlowe:function (flower) {
+				A.receiveFlowe(flower);
+			}
+		}
+		var A = {
+			receiveFlowe:function(flower){
+				console.log("a收到花："+flower);
+			}
+		}
+		xiaoming.sendFlower(B);
+	</script>
+</body>
+</html>

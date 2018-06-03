@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		/**
+		 * 保护代理 代理对象用来过滤对本体对象的访问
+		 * 此处监听a的心情  在实际应用中可能是用来用来检测访问对象是否具备某些属性
+		 * 保护代理用于控制不同权限的对象对目标对象对访问
+		 */
+		var Flower = function(){}
+		var xiaoming = {
+			sendFlower:function(target){
+				var flower = new Flower();
+				target.receiveFlowe(flower);
+			}
+		}
+		var B = {
+			receiveFlowe:function(flower){
+				A.listenGoodMood(function(){
+					A.receiveFlowe(flower);
+				})
+			}
+		}
+		var A = {
+			receiveFlowe:function(flower){
+				console.log("a收到花："+flower);
+			},
+			listenGoodMood:function(fn){
+				setTimeout(function(){
+					fn();
+				}, 1000);
+			}
+		}
+		xiaoming.sendFlower(B);
+	</script>
+</body>
+</html>

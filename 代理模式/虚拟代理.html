@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		/**
+		 * 虚拟代理：把一些开销很大的对象 延迟到真正需要他的时候再去创建
+		 */
+		var xiaoming = {
+			sendFlower:function(target){
+				var Flower = function(){}
+				target.receiveFlowe(Flower);
+			}
+		}
+		var B = {
+			receiveFlowe:function(Flower){
+				A.listenGoodMood(function(){
+					var flower = new Flower();//把开销很大的对象 延迟到真正需要他的时候再去创建
+					A.receiveFlowe(flower);
+				})
+			}
+		}
+		var A = {
+			receiveFlowe:function(flower){
+				console.log("a收到花："+flower);
+			},
+			listenGoodMood:function(fn){
+				setTimeout(function(){
+					fn();
+				}, 1000);
+			}
+		}
+		xiaoming.sendFlower(B);
+	</script>
+</body>
+</html>
