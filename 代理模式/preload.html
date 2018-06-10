@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		/**
+		 * 基本方式实现图片预加载
+		 * 缺点：职责除了负责给img设置src还要负责预加载；
+		 */
+		var preLoadImage = (function(){
+			var imgNode = document.createElement('img');
+			document.body.appendChild(imgNode);
+			var img = new Image;
+			img.onload = function(){
+				imgNode.src = this.src;
+			}
+			return {
+				setSrc:function(src){
+					imgNode.src = './images/timg.gif';
+					img.src = src;
+				}
+			}
+		})()
+		preLoadImage.setSrc('http://b165.photo.store.qq.com/psb?/V125nm0P4AhzCu/iJu19*x3b4YxWru*SNnLCg*UXBX3uACsp.eoH31xx1U!/b/dFm5XWJqAwAA&bo=vAINAgAAAAABB5E!&rf=viewer_4');
+		/**
+		 * 代理实现图片预加载
+		 * 代理的意义：面向对象设计的原则   单一职责原则  开放封闭原则
+		 * 如果不需要图片预加载功能 直接用本体对象去设置src即可 
+		 * 注意遵循代理和本体接口的一致性。
+		 */
+		var myImage = (function(){
+			var imgNode = document.createElement('img');
+			document.body.appendChild(imgNode);
+			return {
+				setSrc:function(src){
+					imgNode.src = src;
+				}
+			}
+		})();
+		var proxyImage = (function(){
+			var img = new Image;
+			img.onload = function(){
+				myImage.setSrc(this.src);
+			}
+			return{
+				setSrc:function(src){
+					myImage.setSrc('./images/timg.gif');
+					img.src = src;
+				}
+			}
+		})()
+		// proxyImage.setSrc('http://b165.photo.store.qq.com/psb?/V125nm0P4AhzCu/iJu19*x3b4YxWru*SNnLCg*UXBX3uACsp.eoH31xx1U!/b/dFm5XWJqAwAA&bo=vAINAgAAAAABB5E!&rf=viewer_4')
+	</script>
+</body>
+</html>
