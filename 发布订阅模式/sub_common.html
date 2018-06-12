@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//发布—订阅的功能的对象
+		let event = {
+			clientList:{},
+			listener:function(key,fn){
+				if(!this.clientList[key]){
+					this.clientList[key] = [];
+				}
+				this.clientList[key].push(fn);
+			},
+			trigger:function(){
+				var key = Array.prototype.shift.call( arguments ), // (1);
+						fns = this.clientList[ key ];
+				if(!fns||fns.length===0){
+					return false;
+				}
+				for(var i = 0,fn;fn=fns[i++];) {
+					fn.apply(this,arguments);
+				}
+			}
+		}
+		//给对象动态安装发布订阅功能 拷贝的方式
+		function installEvent(obj){
+			for(var i in event){
+				obj[i] = event[i]
+			}
+		}
+		var salesOffices = {};
+		installEvent(salesOffices);
+		salesOffices.listener( 'squareMeter88', function( price ){
+			console.log( '价格= ' + price );
+		});
+		salesOffices.trigger('squareMeter88',2000);
+	</script>
+</body>
+</html>

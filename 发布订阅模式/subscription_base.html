@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		/**
+		 * 发布—订阅模式又叫观察者模式，它定义对象间的一种一对多的依赖关系，当一个对象的状状 态发生改变时，所有依赖于它的对象都将得到通知。在 JavaScript 开发中，我们一般用事件模型 来替代传统的发布—订阅模式
+		 */
+
+		/**
+		 * 订阅发布模式最基本例子 dom事件
+		 */
+		document.body.addEventListener( 'click', function(){ alert(4);
+		}, false );
+		/**document.body.click(); // 模拟用户点击
+		*手动触发事件最好的做法是 IE 下用 fireEvent，标准浏览器下用 dispatchEvent 实现。
+		*/
+		
+		/**
+		 * 自定义事件
+		 */
+		 var salesOffices = {};//首先要指定好发布者
+
+		 salesOffices.clientList = []; //然后给发布者添加一个缓存列表，用于存放回调函数以便通知订阅者
+
+		 salesOffices.listen = function(fn){
+		 	this.clientList.push(fn);
+		 }
+		/*最后发布消息的时候，发布者会遍历这个缓存列表，依次触发里面存放的订阅者回调函
+			数(遍历花名册，挨个发短信)。
+		*/
+		 salesOffices.trigger = function(){
+		 	for (var i = 0,fn;fn=this.clientList[i++];) {
+		 		fn.apply(this,arguments);
+		 	}
+		 }
+
+		 salesOffices.listen(function( price, squareMeter){
+		 		console.log("价格:"+price);
+		 		console.log("面积:"+squareMeter);
+		 })
+
+		 salesOffices.listen(function( price, squareMeter){
+		 		console.log("价格:"+price);
+		 		console.log("面积:"+squareMeter);
+		 })
+
+		 salesOffices.trigger( 2000000, 88 ); 
+		 salesOffices.trigger( 3000000, 110 );
+	</script>
+
+	
+</body>
+</html>

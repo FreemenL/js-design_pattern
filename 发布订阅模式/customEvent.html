@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var salesOffices = {};//定义发布者
+
+		salesOffices.clientList = {};//定义缓存列表
+
+		salesOffices.listen = function(key,fn){ //添加订阅者
+			if(!this.clientList[key]){
+				this.clientList[key] = [];
+			}
+			this.clientList[key].push(fn);
+		}
+
+		salesOffices.trigger = function(){  //发布消息
+			let key = Array.prototype.shift.call(arguments);
+			let fns = this.clientList[key];
+			if(!fns||fns.length==0){
+				return false;
+			}
+			for( var i = 0, fn; fn = fns[ i++ ]; ){
+				fn.apply( this, arguments ); // (2) // arguments 是发布消息时附送的参数 即具体的价格
+			}
+		}
+		
+		salesOffices.listen( 'squareMeter88', function( price ){ 
+			console.log( '价格= ' + price ); 
+		});
+		salesOffices.listen( 'squareMeter110', function( price ){ 
+			console.log( '价格= ' + price ); 
+		});
+
+		salesOffices.trigger("squareMeter88",2000000);
+		salesOffices.trigger("squareMeter110",3000000);
+	</script>
+</body>
+</html>
