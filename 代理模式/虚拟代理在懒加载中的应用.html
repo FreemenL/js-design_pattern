@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var minConsole = (function(){
+			var cache = [];
+			//按下F2加载真正的minConsole.js文件 
+			var handler = function(event){
+				if(event.keyCode===113){
+					var minEle = document.createElement('script');
+					//加载完minConsole即执行缓存数组的函数 
+					minEle.onload = function(){
+						cache.forEach(function(item,index){
+							item();
+						})
+					}
+					minEle.src="./js/minConsole.js";
+					document.getElementsByTagName('head')[0].appendChild(minEle);
+					//加载完文件即删除键盘监听  避免重复引入文件 
+					document.body.removeEventListener('keydown',handler);
+				}
+			}
+			document.body.addEventListener('keydown',handler);
+			return {
+				log:function(){
+					var args = arguments;
+					Array.prototype.push.call(cache,function(){
+						//写法1
+						//minConsole.log.apply(minConsole,args);
+						//写法2
+						minConsole.log(...Array.from(args));
+					})
+				}
+			}
+		})()
+		minConsole.log('1');
+		minConsole.log('2');
+		minConsole.log('3');
+	</script>
+</body>
+</html>

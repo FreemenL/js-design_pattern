@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<input type="checkbox" id="1">
+	<input type="checkbox" id="2">
+	<input type="checkbox" id="3">
+	<input type="checkbox" id="4">
+	<input type="checkbox" id="5">
+	<input type="checkbox" id="6">
+	<input type="checkbox" id="7">
+	<input type="checkbox" id="8">
+	<input type="checkbox" id="9">
+	<script type="text/javascript">
+		var syncFile = function(id){
+			console.log("开始同步文件，id为："+id);
+		}
+		var proxySyncFile = (function(){
+			var cache = [],
+			timer;
+			return function(id){
+				Array.prototype.push.call(cache,id);
+				if(timer){
+					return
+				}
+				timer = setTimeout(function(){
+					clearTimeout(timer);
+					let submitArr = new Set(cache);
+					syncFile(Array.from(submitArr).join(','));
+					timer = null;
+				},2000)
+			}
+		})()
+		var checkboxArr = document.getElementsByTagName('input');
+		
+		Array.prototype.slice.call(checkboxArr).forEach(function(item,index){
+			item.onclick = function(){
+				if(this.checked===true){
+					/**
+					 *不用代理的情况发请求 每点击一次就会发一次请求 造成相当大的开销
+					*/
+					//syncFile(this.id);
+					/**
+					 * 虚拟代理合并http请求  减轻服务器压力
+					*/
+					proxySyncFile(this.id);
+				}
+			}
+		})
+		
+
+	</script>
+</body>
+</html>
