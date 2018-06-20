@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		let mult = function(){
+			console.log('开始乘法计算')
+			let a = 1;
+			for(let i = 0, l=arguments.length;i<l; i++){
+				a = a*arguments[i];
+			}
+			return a;
+		}
+		let plus = function(){
+			console.log('开始加法计算')
+			let a = 0;
+			for(let i=0,l=arguments.length;i<l;i++){
+				a += arguments[i];
+			}
+			return a;
+		}
+		/**
+		 * 缓存代理工厂
+		 */
+		let proxyFatory = function(fn){
+			let cache = {};
+			return function(){
+				let args = Array.prototype.join.call(arguments,",");
+				if(args in cache){
+					return cache[args];
+				}
+				return cache[args] = fn.apply(this,arguments);
+			}
+		}
+		let proxyMult = proxyFatory(mult);
+		let proxyPlus = proxyFatory(plus);
+		console.log(proxyMult(1,2,3));
+		console.log(proxyMult(1,2,3));
+		console.log(proxyPlus(1,2,3));
+		console.log(proxyPlus(1,2,3));
+	</script>
+</body>
+</html>
