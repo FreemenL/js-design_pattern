@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+    /**
+     * [外部迭代器] 手动的控制迭代的过程和顺序 
+     * @param {[type]} arrObj [description]
+     */
+		let Iterator = function(arrObj){
+      let current = 0;
+      let next = ()=>{
+        current++;
+      }
+      let getCurrentItem = () =>{
+        return arrObj[current];
+      }
+      let isDone = ()=>{
+        return current>arrObj.length;
+      }
+      return {
+        next,
+        getCurrentItem,
+        isDone,
+        length:arrObj.length
+      }
+    }
+    let compare = function(iterator1,iterator2){
+      if(iterator1.length!==iterator2.length){
+        alert('不相等！');
+      }
+      while(!iterator1.isDone()&&!iterator2.isDone()){
+        if(iterator1.getCurrentItem()!==iterator2.getCurrentItem()){
+          throw new Error('不相等!');
+        }
+        iterator1.next();
+        iterator2.next();
+      }
+      alert('相等');
+    }
+    let iterator1 = Iterator([1,3,4]);
+    let iterator2 = Iterator([1,2,3,4]);
+    compare(iterator1,iterator2);
+	</script>
+</body>
+</html>

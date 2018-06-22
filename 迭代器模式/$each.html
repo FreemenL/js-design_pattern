@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		/**
+		 * jquery的each函数实现方式
+		 * 内部迭代器  函数内部定义好了迭代的过程 
+		 * @param  {[type]}   arr      [待迭代的数组]
+		 * @param  {Function} callback [callback]
+		 */
+		let each = function(arr,callback){
+			for(var i=0,len=arr.length;i<len;i++){
+				callback.call(arr[i],i,arr[i])
+			}
+		}
+		each([{name:'xm'},{name:'xw'}],function(index,item){
+			console.log(item.name);
+		});
+		/**
+		 * 迭代两个数组  判断是否相等 
+		 */
+		let compare = function(arr1,arr2){
+      if(arr1.length!==arr2.length){
+       throw new Error('不相等');
+      }
+      each(arr1,function(index,item){
+      	if(item!==arr2[index]){
+      		throw new Error('不相等');
+      	}
+      })
+      alert("相等");
+		}
+		let arr1 = [1,2,3];
+		let arr2 = [1,2,4];
+		compare(arr1,arr2); 
+	</script>
+</body>
+</html>
