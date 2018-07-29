@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		/**
+		 * 根据不同的浏览器 获取相应的上传控件
+		 */
+		var getUploadObj = function(){ 
+				try{
+
+					return new ActiveXObject("TXFTNActiveX.FTNUpload"); // IE 上传控件
+
+				}catch(e){
+
+					 if ( supportFlash() ){ // supportFlash 函数未提供
+
+							var str = '<object type="application/x-shockwave-flash"></object>'; 
+
+							return $( str ).appendTo( $('body') );
+
+					}else{
+
+						var str = '<input name="file" type="file"/>'; // 表单上传
+						return $( str ).appendTo( $('body') );
+
+					}
+				}
+			};
+
+		 /**
+		  * 使用中止迭代器优化 上面代码
+		  */
+		 let getActiveUploadObj = function(){
+
+		 		try{
+
+					return new ActiveXObject("TXFTNActiveX.FTNUpload"); // IE 上传控件
+
+				}catch(e){
+
+					return false;
+
+				}
+
+		 }
+
+		 let getFlashUploadObj = function(){ 
+		 		if(supportFlash()){
+
+		 			var str = '<object type="application/x-shockwave-flash"></object>'; 
+
+					return $( str ).appendTo( $('body') );
+
+		 		}else{
+
+		 			return false;
+
+		 		}
+		 }
+
+		 let getFormUpladObj = function(){
+
+		 		var str = '<input name="file" type="file"/>'; // 表单上传
+
+				return $( str ).appendTo( $('body') );
+
+		 }
+		 /**
+		  * 中止迭代器 获取上传控件
+		  */
+		 let iteratorUploadObj = function(){
+		 		for(let i=0,fn;fn=arguments[i++]){
+		 			let uploadObj = fn();
+		 			if(uploadObj!==false){
+		 				return uploadObj;
+		 			}
+		 		}
+		 }
+
+		 /**
+		  * [uploadObj description]
+		  * 按优先级 传入相应的 获取上传控件函数 
+		  */
+		 let uploadObj = iteratorUploadObj(getActiveUploadObj,getFlashUploadObj,getFormUpladObj);
+
+
+
+	</script>
+</body>
+</html>

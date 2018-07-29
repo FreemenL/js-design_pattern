@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"></script>
+</head>
+<body>
+	
+	<script>
+		/**
+		 * @param  {[type]} 目标对象 
+		 * @param  {Function} 迭代函数
+		 */
+		let $each = function(obj,callback){
+			let value;
+			let i = 0;
+			let length = obj.length;
+			let isArray = _.isArrayLike(obj);
+
+			if(isArray){
+				for (;i<length;i++){
+					value = callback.call(obj[i],i,obj[i]);// 修改this 指向 使之指向当前对象
+					if(value===false){
+						break;
+					}
+				}
+			}else{
+				for(i in obj){
+					value = callback.call(obj[i],i,obj[i]);; // 修改this 指向 使之指向当前对象
+					if(value===false){
+						break;
+					}
+				}
+			}
+			return obj
+		}
+
+		function test(){
+			$each(arguments,function(index,item){
+				console.log(this.name);
+			});
+		}
+
+		test({name:'zhangsan',age:1},{name:"lisi",age:2});
+
+	</script>
+</body>
+</html>
