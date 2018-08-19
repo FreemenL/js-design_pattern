@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+			class login{
+				constructor(){
+					this.behavior={}
+				}
+				listener(key,fn){
+					if(!this.behavior[key]){
+						this.behavior[key] = []
+					}
+					this.behavior[key].push(fn)
+				}
+				trigger(){
+					let key = Array.prototype.shift.call(arguments);
+					let fns = this.behavior[key];
+					if(!fns||fns.length==0){
+						return false;
+					} 
+					for(let fn,i=0;fn=fns[i++];){
+						fn.apply(this,arguments);
+					}
+				}
+				remove(key,fn){
+					let fns = this.behavior[key];
+					if(!fns||fns.length==0){
+						return
+					}
+					if(!fn){
+						fns&&(fns.length=0)
+					}else{
+						for(let l=fns.length-1;l>=0;l--){
+							let _fn = fns[l];
+							if(_fn===fn){
+								fns.splice(l,1);
+							}
+						}
+					}
+				}
+			}
+
+			let loginObj = new login();
+
+			loginObj.listener("loginSuccess",(data)=>{
+				console.log("更新用户头像...",data.userImg);
+			})
+
+			loginObj.listener("loginSuccess",(data)=>{
+				console.log("更新地址...",data.address);
+			})		
+
+			setTimeout(()=>{
+
+				let data = {userImg:"userImg",address:"userAddress"};
+				loginObj.trigger("loginSuccess",data);
+
+			},2000)
+	</script>
+</body>
+</html>

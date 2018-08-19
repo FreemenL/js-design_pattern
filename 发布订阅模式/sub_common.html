@@ -24,6 +24,24 @@
 				for(var i = 0,fn;fn=fns[i++];) {
 					fn.apply(this,arguments);
 				}
+			},
+			remove:function(key,fn){
+				var fns = this.clientList[key];
+				if(!fns){
+				  return false;
+				}
+				if(!fn){
+					//如果没有传入具体的监听函数则取消所有的事件订阅 
+					fns&&(fns.length=0)
+					
+				}else{
+					for (let i = fns.length - 1; i>=0; i--) {  // 反向遍历订阅的回调函数列表
+						let _fn = fns[i];
+						if(_fn===fn){
+							fns.splice(i,1); // 删除订阅者的回调函数
+						}
+					}
+				}
 			}
 		}
 		//给对象动态安装发布订阅功能 拷贝的方式
@@ -32,11 +50,20 @@
 				obj[i] = event[i]
 			}
 		}
+
 		var salesOffices = {};
+
 		installEvent(salesOffices);
+
 		salesOffices.listener( 'squareMeter88', function( price ){
+
 			console.log( '价格= ' + price );
+
 		});
+		salesOffices.trigger('squareMeter88',2000);
+
+		salesOffices.remove("squareMeter88");
+
 		salesOffices.trigger('squareMeter88',2000);
 	</script>
 </body>

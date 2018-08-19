@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="test"></div>
+	<div id="test1"></div>
+	<script>
+		/**
+		 * [ 自定义事件 基础 ]
+		 * @type {Event}
+		*/
+		let event = new Event('build');
+
+		let ele = document.getElementById('test');
+		let ele1 = document.getElementById('test1');
+
+		ele.addEventListener("build",()=>{
+			console.log("build-Event");
+		})
+
+		ele.dispatchEvent(event);
+ 		
+ 		/**
+ 			* 向自定义事件传递数据
+ 		*/
+
+ 		let dataEvent = new CustomEvent("dataTransform",{detail:"this is event detail!"});
+
+ 		ele1.addEventListener("dataTransform",(eve)=>{
+ 			console.log(eve.detail);
+ 		})	
+
+ 		ele1.dispatchEvent(dataEvent);
+	</script>
+</body>
+</html>
