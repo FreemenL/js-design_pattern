@@ -8,10 +8,15 @@
 	<script>
 
 		let id = 0;
-
+		/**
+		 * [startUpload description]
+         * 触发上传函数
+		 */
 		let startUpload = function(uploadType,files){
 			for(var i = 0,file;file=files[i++];){
+				//实例化对象
 				let uploadObj = new Upload(uploadType,file["fileName"],file["fileSize"]);
+				//初始化 dom
 				uploadObj.init(id++);
 			}
 		}
@@ -32,7 +37,9 @@
 			}
 			document.body.appendChild(this.dom);
 		};
-
+		/**
+		 * 删除文件
+		 */
 		Upload.prototype.delFile = function(){
 			if(this.fileSize<3000){
 				return this.dom.parentNode.removeChild(this.dom);
@@ -63,7 +70,9 @@
 			fileName:"3.txt",
 			fileSize:11900,
 		}])
-		
+		/**
+		 * 缺点 ：有多少文件 就生成多好对象 当文件过多时 性能会大打折扣 IE上可能造成假死状态 
+		*/
 	</script>
 </body>
 </html>
