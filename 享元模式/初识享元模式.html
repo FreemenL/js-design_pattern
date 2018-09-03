@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		/**
+		 * 模特的demo 最基本实现  【缺点：每次都要创建一个对象】
+		 * @param {[type]} sex       [description]
+		 * @param {[type]} underwear [description]
+		 */
+		let Model = function(sex,underwear){
+			this.sex = sex;
+			this.underwear = underwear;
+		}
+
+		Model.prototype.takePhoto = function() {
+			console.log(`sex=${this.sex},underwear=${this.underwear}`);
+		};
+
+		for (let i = 0; i <=50; i++) {
+			let Model = new Model("male","underwear"+i);
+			Model.takePhoto();
+		}
+
+		for (let i = 0; i <=50; i++) {
+			let Model = new Model("famale","underwear"+i);
+			Model.takePhoto();
+		}
+		/**
+		 * 享元模式。共享内部状态
+		 * @param {[type]} sex [description]
+		 */
+		let Model = function(sex){
+			this.sex = sex;
+		}
+
+		Model.prototype.takePhoto = function() {
+			console.log(`sex=${this.sex},underwear=${this.underwear}`);
+		};
+
+		let maleModel = new Model("male");
+
+		let famaleModel = new Model("famale");
+
+		for (var i = 0; i <=50; i++) {
+
+			maleModel.underwear = `underwear${i}`;
+			maleModel.takePhoto();
+
+		}
+		
+		for (var i = 0; i <=50; i++) {
+
+			famaleModel.underwear = `underwear${i}`;
+			famaleModel.takePhoto();
+
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>
