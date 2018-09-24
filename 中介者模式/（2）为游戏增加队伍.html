@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+   <script>
+			let players = [];//玩家列表 
+			/**
+			 * [Player description] 玩家的构造函数 
+			 * 定义玩家队友列表。 敌人列表 玩家状态  玩家名字。玩家团队颜色。
+			 */
+			function Player(name,teamColor){
+				this.partners = [];
+				this.enemies = [];
+				this.state = 'live';
+				this.name = name;
+				this.teamColor  = teamColor;
+			}
+
+			Player.prototype.lose = function(){
+				console.log(`loser:${this.name}`)
+			}
+
+			Player.prototype.win = function(){
+				console.log(`winer:${this.name}`)
+			}
+			/*
+				当前玩家 死亡 如果队友全部死亡 则通知队友失败 敌人胜利 
+			*/
+			Player.prototype.die = function(){
+				let all_die = true;
+				this.state = 'dead';
+				console.log("死亡玩家===>"+this.name)
+				for (let i = 0,partner;partner = this.partners[i++];) {
+					if(partner["state"]!=="dead"){
+						all_die = false;
+						break;
+					}
+				}
+				if(all_die){
+					this.lose();
+					for (let i =0,partner;partner=this.partners[i++];) {
+						partner.lose();
+					}
+					for (var i = 0,enemy;enemy = this.enemies[i++];) {
+						enemy.win()
+					}
+				}
+			}
+			/**
+			 * [playerFactory description]
+			 * 创建玩家的工厂函数 
+			 * 实例化玩家。为玩家添加队友及敌人 玩家列表中添加当前新建玩家
+			 * < 缺点: 敌友列表保存在当前对象。 在新建对象的时候 需要遍历整个 用户列表 为其确定 新人是敌是友 >
+			*/
+			let playerFactory = function(name,teamColor){
+
+				const newPlayer = new Player(name,teamColor);
+
+				for (let i = 0,player;player = players[i++];) {
+					if(newPlayer.teamColor === player.teamColor){
+						newPlayer.partners.push(player);
+						player.partners.push(newPlayer);
+					}else{
+						newPlayer.enemies.push(player);
+						player.enemies.push(newPlayer);
+					}
+				}
+
+				players.push(newPlayer);
+				return newPlayer
+			}
+			/**
+			 * 创建玩家战队
+			*/
+		  const player1 = playerFactory("小乖","red");
+		  const player2 = playerFactory("小乐","red");
+		  const player3 = playerFactory("小天","red");
+		  const player4 = playerFactory("小军","red");
+
+		  const player5 = playerFactory("黑妞","blue");
+		  const player6 = playerFactory("葱头","blue");
+		  const player7 = playerFactory("胖墩","blue");
+		  const player8 = playerFactory("哈哈","blue");
+		  //红队是失败  
+		  player1.die()
+		  player2.die()
+		  player3.die()
+		  player4.die()
+
+   </script>
+</body>
+</html>

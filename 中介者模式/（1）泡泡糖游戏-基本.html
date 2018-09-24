@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		//基本例子 支持两个玩家游戏。
+		function Player(name){
+			this.name = name;
+			this.enemy = null
+		}
+		Player.prototype.win = function(){
+			console.log(`${this.name}win`);
+		}
+		Player.prototype.close = function(){
+			console.log(`${this.name}close`);
+		}
+		Player.prototype.die = function(){
+			this.close();
+			this.enemy.win();
+		}
+
+		let player1 = new Player("皮蛋");
+		let player2  = new Player("小乖");
+
+		player1.enemy = player2;
+		player2.enemy = player1;
+		//玩家一被炸死的时候。
+		player1.die();
+
+	</script>
+</body>
+</html>
