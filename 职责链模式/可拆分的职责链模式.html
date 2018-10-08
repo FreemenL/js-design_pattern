@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		let order500 = (orderType,pay,stock) =>{
+			if(orderType==1&&pay){
+				console.log("得到500元优惠券！");
+			}else{
+				return "nextSuccessor"
+			}
+		}
+
+		let order200 = (orderType,pay,stock) =>{
+			if(orderType==2&&pay){
+				console.log("得到200元优惠券！");
+			}else{
+				return "nextSuccessor"
+			}
+		}
+		let orderNormal = (orderType,pay,stock) =>{
+			if(orderType==3&&stock>0){
+				console.log("普通购买无惠券！");
+			}else{
+				console.log("库存不足！");
+			}
+		}
+		let Chain = function(fn){
+			this.fn = fn;
+			this.successor = null;
+		}
+		// Chain.prototype.setNextSuccessor 指定在链中的下一个节点
+		// Chain.prototype.passRequest 传递请求给某个节点
+		Chain.prototype.setNextSuccessor = function(successor){
+			this.successor = successor;
+		}
+		Chain.prototype.passRequest = function(){
+			let ret = this.fn.apply(this,arguments);
+			if(ret==="nextSuccessor"){
+				return this.successor&&this.successor.passRequest.apply(this.successor,arguments);
+			}
+			return ret;
+		}
+		//现在我们把 3 个订单函数分别包装成职责链的节点
+		let chainOrder500 = new Chain(order500);
+		let chainOrder200 = new Chain(order200);
+		let chainOrderNormal = new Chain(orderNormal);
+
+		//然后指定节点在职责链中的顺序:
+		chainOrder500.setNextSuccessor(chainOrder200);
+		chainOrder200.setNextSuccessor(chainOrderNormal);
+
+		chainOrder500.passRequest(1,false,0);
+		chainOrder500.passRequest(2,true,11);
+		chainOrder500.passRequest(3,true,10);
+
+	</script>
+</body>
+</html>
