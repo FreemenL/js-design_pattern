@@ -1,13 +1,13 @@
 learn《javascript 设计模式与开发实践》
 =========
 
-> 学习新心得 
+> 学习心得 
 
 **[单例模式 案例](https://github.com/FreemenL/js-design_pattern/tree/master/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F)
 
     
     *  惰性单例是单例模式的重点，是指在需要的时候才创建实例 
-    
+
     *  创建对象和管理单例的指责分布在两个不同的方法中 这两个方法组合起来才具有单例模式的威力
 **[策略模式 案例](https://github.com/FreemenL/js-design_pattern/tree/master/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F)
 
