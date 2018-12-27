@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        Function.prototype.bind= function(){
+            let self = this;//保存原函数
+            let context = [].shift.call(arguments);  //要指向的目标对象
+            let args = [].slice.call(arguments);  //首次传参
+            return function(){//返回新的执行上下文
+                //执行原函数  并把两次的参数合并
+                return self.apply(context,[].concat.call(args,[].slice.call(arguments)))
+            }
+        }
+
+        let obj = {
+            name:"xixi"
+        }
+
+        let func = function(a,b,c,d){
+            alert(this.name)
+            alert([a,b,c,d])
+        }.bind(obj,1,2);
+
+        func(3,4); 
+    </script>
+</body>
+</html>
