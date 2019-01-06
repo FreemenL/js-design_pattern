@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>12-装饰者模式</title>
+</head>
+<body>
+
+<script>
+    /**
+     * 12-装饰者模式
+     * 核心：不改变对象自身代码，而是在运行期间给对象动态地添加功能
+     *      跟继承相比，装饰者更加轻便，即用即付。比如天冷了就多穿一件外套，出行时就骑个自行车
+     * 应用场景：见fx-code的组件之间的继承
+     * 目标: 给飞机类增加发射导弹和原子弹的功能 & 装饰函数 & 用AOP装饰函数（见AOP.html)
+     */
+    /***************** 传统面向对象语言的装饰者模式 ************************/
+    var Plane = function () {};
+    Plane.prototype.fire = function () {
+        console.log('发射普通子弹');
+    };
+    // 下面增加两个装饰类
+    var MissileDecorator = function (plane) {
+        this.plane = plane;
+    };
+    MissileDecorator.prototype.fire = function () {
+        this.plane.fire();
+        console.log('发射导弹');
+    };
+    var AtomDecorator = function (plane) {
+        this.plane = plane;
+    };
+    AtomDecorator.prototype.fire = function () {
+        this.plane.fire();
+        console.log('发射原子弹');
+    };
+    // 实例化一架飞机
+    var plane = new Plane();
+    plane = new MissileDecorator(plane);
+    plane = new AtomDecorator(plane);
+    plane.fire(); // 输出：发射普通子弹、发射导弹、发射原子弹
+    /**
+     * 这种给对象动态添加功能的方式，并没有真正改动对象自身，而是将对象放入另一个对象之中，
+     * 这些对象以一条链条的方式进行引用，形成一个聚合对象。
+     * 这些对象都拥有相同的接口（fire），当请求到达某个对象时，
+     * 这个对象会时执行自身的操作，随后把请求转发给链条中的下一个对象
+     */
+    /************************* 装饰函数 ******************************/
+    /**
+     * 在js中，几乎一切都是对象，其中函数又被称为一等对象。
+     * 在js中，可以很方便地给某个对象扩展属性或者方法，
+     * 但是却很难在不改动某个函数源代码的情况下，给函数增加一些额外的功能。
+     * 要想为函数添加一些功能，最丑陋的方式就是直接改写该函数，这违反了开放-封闭原则。
+     */
+    var a = function () {
+        alert(1);
+    };
+    // 改成
+    var newA = function () {
+        alert(1);
+        alert(2);
+    };
+    /**
+     * 很多时候，我们不想去触碰原来的函数
+     * 我们可以通过保存原函数引用的方式来给原来的函数增加功能
+     */
+    var b = function () {
+        alert(1);
+    };
+    var _b = b;    // 保存原函数的引用
+    b = function () {   //  覆写原函数
+        _b();
+        alert(2);
+    }
+</script>
+</body>
+</html>
