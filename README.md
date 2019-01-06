@@ -25,7 +25,7 @@ learn《javascript 设计模式与开发实践》
 
     *  应用场景也十分广泛比如接口请求返回的状态 根据不同状态执行不同的逻辑 这部分逻辑就可以抽象到单独的一个对象中 
 
--[代理模式 案例](https://github.com/FreemenL/js-design_pattern/tree/master/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F)
+- [代理模式 案例](https://github.com/FreemenL/js-design_pattern/tree/master/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F)
 
 	* 代理模式分为保护代理和虚拟代理（缓存代理） 典型的应用是对接口请求的数据进行缓存节省流量个带宽 这在移动端显得尤为重要
 	* 保护代理: 在代理对象中对本体对象的请求进行过滤 用于控制不同权限的对象对目标对象的访问
