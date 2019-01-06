@@ -3,7 +3,7 @@ learn《javascript 设计模式与开发实践》
 
 > 学习心得 
 
--[单例模式 案例](https://github.com/FreemenL/js-design_pattern/tree/master/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F)
+- [单例模式 案例](https://github.com/FreemenL/js-design_pattern/tree/master/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F)
 
     
     *  惰性单例是单例模式的重点，是指在需要的时候才创建实例 
@@ -14,7 +14,7 @@ learn《javascript 设计模式与开发实践》
 
     创建弹框的dom对象等等
 
--[策略模式 案例](https://github.com/FreemenL/js-design_pattern/tree/master/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F)
+- [策略模式 案例](https://github.com/FreemenL/js-design_pattern/tree/master/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F)
 
     
     *  策略模式的目的就是将算法的实现和算法的使用分离开来
@@ -32,19 +32,19 @@ learn《javascript 设计模式与开发实践》
 	* 虚拟代理：把一些开销很大的对象延迟到真正需要他的时候再去创建
 
     
--[迭代器模式 案例](https://github.com/FreemenL/js-design_pattern/tree/master/%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F)
+- [迭代器模式 案例](https://github.com/FreemenL/js-design_pattern/tree/master/%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F)
 
     * 迭代器模式是指提供一种方法顺序访问一个聚合对象中的各个元素 而又不需要暴露该对象的内部表示。 
     * 内部迭代器：函数内部定义好了迭代的过程
     * 外部迭代器：手工控制迭代的过程和顺序 
 
--[发布订阅模式 案例](https://github.com/FreemenL/js-design_pattern/tree/master/%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F)
+- [发布订阅模式 案例](https://github.com/FreemenL/js-design_pattern/tree/master/%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F)
 
 	* 发布订阅模式 又叫观察者模式 它定义对象间的一种一对多的依赖关系 
 	* 当一个对象的状态发生改变时，所有依赖它的对象 都将得到通知 ，这也是异步的解决方案之一
 	* 发布订阅模式在软件开发中占有举足轻重的位置  比如 vue中双向数据绑定  vuex redux webpack 的核心库tapable中的同步异步hook 等等
 
--[命令模式 案例](https://github.com/FreemenL/js-design_pattern/tree/master/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F)
+- [命令模式 案例](https://github.com/FreemenL/js-design_pattern/tree/master/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F)
 
     * 命令模式的意图是把请求封装为对象，从而分离请求的发送者和请求的响应者之间的偶和关系 以便把响应  解偶。
 
