@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>8-模板方法模式</title>
+</head>
+<body>
+
+<script>
+    /*
+     * 8-模板方法
+     * 核心：子类实现中相同的部分被上移到父类中，而将不同的部分留到子类来实现
+     *       模板方法可以使用继承来实现，模板方法模式是一种严重依赖抽象类的设计模式
+     *       子类的方法种类和执行顺序都是不变的，所以我们把这部分逻辑抽象到父类的模板方法里面
+     * 好莱坞原则：不要来找我，我会给你打电话
+     *            模板方法模式就是好莱坞原则的一个典型应用场景：子类放弃了对自己的控制权，而是由父类来通知子类
+     *            作为子类，只负责提供一些设计上的细节
+     *            发布订阅模式和回调函数也是好莱坞原则的体现
+     * 应用场景：见fx-code
+     * 目标：冲一杯Coffee或者Tea
+     * 2017/02/08 21:18
+     */
+    // 作为抽象类的饮料类
+    var Beverage = function () {};
+    Beverage.prototype = {
+        constructor: Beverage,
+        init: function () {     // 模板方法，指导子类以何种顺序来执行哪些方法
+            this.boilWater();
+            this.brew();
+            this.pourInCup();
+            this.customerWantsCondiments() && this.addCondiments(); // 如果挂钩返回true，则添加佐料
+        },
+        boilWater: function () {    // 所有子类的实现都相同，可以提到父类
+            console.log('把水煮沸');
+        },
+        brew: function () {     // 哑方法，待子类实现，若不实现，则抛错提醒
+            throw new Error('子类必须重写brew方法');
+        },
+        pourInCup: function () {
+            throw new Error('子类必须重写pourInCup方法');
+        },
+        addCondiments: function () {
+            throw new Error('子类必须重写addCondiments方法');
+        },
+        customerWantsCondiments: function () {  // 钩子方法，封装父类中容易变化的地方
+            return true;
+        }
+    };
+    // 定义继承方法
+    var inherit = function (sub, sup) {
+        var F = function () {};
+        F.prototype = sup.prototype;
+        sub.prototype = new F();
+        sub.prototype.constructor = sub;
+    };
+    // Coffee类
+    var Coffee = function () {};
+    inherit(Coffee, Beverage);  // 让咖啡类继承饮料类
+    Coffee.prototype.brew = function () {   // 重写父类方法
+        console.log('用沸水冲泡咖啡');
+    };
+    Coffee.prototype.pourInCup = function () {
+        console.log('把咖啡倒进杯子');
+    };
+    Coffee.prototype.addCondiments = function () {
+        console.log('加糖和牛奶');
+    };
+    // 现在，冲一杯咖啡
+    var coffee1 = new Coffee();
+    coffee1.init();
+    // Tea类，不加佐料
+    var Tea = function () {};
+    inherit(Tea, Beverage);
+    Tea.prototype.brew = function () {
+        console.log('用沸水浸泡茶叶');
+    };
+    Tea.prototype.pourInCup = function () {
+        console.log('把茶叶倒进茶杯');
+    };
+    Tea.prototype.addCondiments = function () {
+        console.log('加柠檬')
+    };
+    Tea.prototype.customerWantsCondiments = function () {   // 不加佐料
+        return false;
+    };
+    // 现在，再冲一杯茶
+    var tea1 = new Tea();
+    tea1.init();
+</script>
+</body>
+</html>
