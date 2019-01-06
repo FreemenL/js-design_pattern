@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>14-适配器模式</title>
+</head>
+<body>
+
+<script>
+    /**
+     * 14-适配器模式
+     * 核心：适配器模式的作用是解决两个软件实体间的接口不兼容问题。
+     *      使用适配器模式之后，由于接口不兼容的两个软件实体可以一起工作
+     * 目标：地图接口转换
+     */
+    // 谷歌地图接口
+    var googleMap = {
+        show: function () {
+            console.log('开始渲染谷歌地图');
+        }
+    };
+    // 百度地图接口
+    var baiduMap = {
+        dispaly: function () {
+            console.log('开始渲染百度地图');
+        }
+    };
+    var renderMap = function (map) {
+        if (map.show instanceof Function) {
+            map.show();
+        }
+    };
+    // 使用失配来使百度地图和谷歌地图拥有相同的接口
+    var baiduMapAdapter = {
+        show: function () {
+            return baiduMap.dispaly();
+        }
+    };
+    // 现在可以轻松使用这两个接口了
+    renderMap(googleMap);
+    renderMap(baiduMapAdapter);
+</script>
+</body>
+</html>
